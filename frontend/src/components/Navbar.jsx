@@ -10,13 +10,19 @@ const Navbar = () => {
     return (
         <nav className='flex items-center justify-between px-4 md:px-10 py-4 mb-5 border-b border-gray-300 shadow-sm'>
             
-            {/* Logo */}
-            <img
-                onClick={() => navigate('/')}
-                className='w-36 md:w-44 cursor-pointer'
-                src={assets.logo}
-                alt="Logo"
-            />
+            {/* Logo and X-Care */}
+            <div className='flex items-center'>
+                <img
+                    onClick={() => navigate('/')}
+                    className='w-24 md:w-32 cursor-pointer' // Kích thước logo
+                    src={assets.logo}
+                    alt="Logo"
+                    style={{ width: '50px', height: 'auto' }} // Điều chỉnh kích thước tại đây
+                />
+                <span className='text-xl md:text-2xl font-semibold text-primary cursor-pointer ml-1' onClick={() => navigate('/')}>
+                    X-Care
+                </span>
+            </div>
 
             {/* Menu Links */}
             <ul className='hidden md:flex items-center gap-8 font-semibold text-gray-700 text-sm'>

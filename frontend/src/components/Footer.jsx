@@ -9,7 +9,7 @@ const Footer = () => {
                 
                 {/* Left: About */}
                 <div>
-                    <img className='mb-4 w-36' src={assets.logo} alt="Logo" />
+                    <img className='mb-4 w-36' src={assets.logo} alt="Logo" style={{ width: '50px', height: 'auto' }} />
                     <p className='text-sm leading-6 text-gray-600'>
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text since the 1500s.
                     </p>

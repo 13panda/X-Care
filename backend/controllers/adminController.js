@@ -1,6 +1,6 @@
 import validator from "validator"
 import bcrypt from 'bcrypt'
-import {v2 as cloudinary} from 'cloudinary'
+import { v2 as cloudinary } from 'cloudinary'
 import doctorModel from "../models/doctorModel.js"
 import jwt from 'jsonwebtoken'
 
@@ -9,25 +9,25 @@ const addDoctor = async (req, res) => {
     try {
         console.log('=== Request Body ===');
         console.log(req.body);
-        
+
         console.log('\n=== File Data ===');
         console.log(req.file);
-        
+
         const { name, email, password, speciality, degree, experience, about, fees, address } = req.body;
 
         //Checking for all data add doctor
-        if(!name || !email || !password || !speciality || !degree || !experience || !about || !address){
-            return res.json({success:false, message:"Missing Details"})
+        if (!name || !email || !password || !speciality || !degree || !experience || !about || !address) {
+            return res.json({ success: false, message: "Missing Details" })
         }
 
         // validating email format
-        if(!validator.isEmail(email)){
-            return res.json({success:false, message:"Please enter a valid email"})
+        if (!validator.isEmail(email)) {
+            return res.json({ success: false, message: "Please enter a valid email" })
         }
 
         // validating strong password
-        if(password.length < 8){
-            return res.json({success:false, message:"Please enter a strong password"})
+        if (password.length < 8) {
+            return res.json({ success: false, message: "Please enter a strong password" })
         }
 
         // hashing doctor password
@@ -59,20 +59,20 @@ const addDoctor = async (req, res) => {
         await newDoctor.save()
 
         console.log('Doctor added successfully:', newDoctor);
-        res.json({success:true, message:"Doctor added !!!"})
+        res.json({ success: true, message: "Doctor added !!!" })
 
     } catch (error) {
         console.error('Error:', error);
-        res.json({success:false, message:error.message})
+        res.json({ success: false, message: error.message })
     }
 }
 
 // API for admin login
-const loginAdmin = async(req, res) => {
+const loginAdmin = async (req, res) => {
     try {
         const { email, password } = req.body
 
-        if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
             // Create token with admin data
             const tokenData = {
                 email: email,
@@ -90,4 +90,15 @@ const loginAdmin = async(req, res) => {
     }
 }
 
-export { addDoctor, loginAdmin }
+// API to get all doctor list
+const allDoctors = async (req, res) => {
+    try {
+        const doctors = await doctorModel.find({}).select('-password')
+        res.json({ success: true, doctors })
+    } catch (error) {
+        console.log(error)
+        res.json({ success: false, message: error.message })
+    }
+}
+
+export { addDoctor, loginAdmin, allDoctors }
